@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <string.h>    
+// Define student struct (struct name is -- student)
+struct student {
+ int id;
+ char name[50];
+ float marks;
+};
+void insert(struct student s[], int *n);
+void delete(struct student s[], int *n);
+void display(struct student s[], int n);
+int main() {
+ struct student s[70]; // Maximum of 70 students
+ int n = 0, choice;
+ 
+ do {
+ // Display menu options
+ printf("\nMenu:\n");
+ printf("1. Insert student\n");
+ printf("2. Delete student\n");
+ printf("3. Display all students\n");
+ printf("4. Exit\n");
+ printf("Enter choice: ");
+ scanf("%d", &choice);
+ 
+ switch (choice) {
+ case 1:
+ insert(s, &n);
+ break;
+ case 2:
+ delete(s, &n);
+ break;
+ case 3:
+ display(s, n);
+ break;
+ case 4:
+ printf("Exiting program...\n");
+ break;
+ default:
+ printf("Invalid choice. Try again.\n");
+ }
+ 
+ } while (choice != 4);
+ 
+ return 0;
+}
+void insert(struct student s[], int *n) {
+ // Prompt user for student details
+ printf("Enter student ID: ");
+ scanf("%d", &s[*n].id);
+ printf("Enter student name: ");
+ scanf("%s", s[*n].name);
+ printf("Enter student marks: ");
+ scanf("%f", &s[*n].marks);
+ 
+ // Increment number of students
+ (*n)++;
+ 
+ // Confirm insertion
+ printf("Student details added.\n");
+}
+void delete(struct student s[], int *n) {
+ int id, i, j;
+ 
+ // Prompt user for student ID to delete
+ printf("Enter student ID to delete: ");
+ scanf("%d", &id);
+ 
+ // Find the student with the specified ID
+ for (i = 0; i < *n; i++) {
+ if (s[i].id == id) {
+ // Shift all elements after the student to be deleted back by one
+ for (j = i; j < *n - 1; j++) {
+ s[j] = s[j+1];
+ }
+ 
+ // Decrement number of students
+ (*n)--;
+ 
+ // Confirm deletion
+ printf("Student with ID %d deleted.\n", id);
+ return;
+ }
+ }
+ 
+ // Student not found
+ printf("Student with ID %d not found.\n", id);
+}
+void display(struct student s[], int n) {
+ int i;
+ 
+ // Print header for student details
+ printf("\nID\tName\tMarks\n");
+ 
+ // Print details of each student
+ for (i = 0; i < n; i++) {
+ printf("%d\t%s\t%.2f\n", s[i].id, s[i].name, s[i].marks);
+ } }
